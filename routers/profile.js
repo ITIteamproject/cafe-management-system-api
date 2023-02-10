@@ -27,8 +27,8 @@ userProfileRouter.patch('/username/:id', async (req, res, next) => {
         const { id } = req.params
         const { username } = req.body
 
-        await User.findByIdAndUpdate(id, { username })
-        res.status(200).send('username updated successfully')
+        const { username: updatedName } = await User.findByIdAndUpdate(id, { username })
+        res.status(200).send({ username: updatedName }) // returns the old username
     } catch (error) {
         next(customError(401, 'unauthorized'))
     }
@@ -40,8 +40,8 @@ userProfileRouter.patch('/email/:id', async (req, res, next) => {
         const { id } = req.params
         const { email } = req.body
 
-        await User.findByIdAndUpdate(id, { email })
-        res.status(200).send('email updated successfully')
+        const { email: updatedEmail } = await User.findByIdAndUpdate(id, { email })
+        res.status(200).send({ email: updatedEmail }) // returns the old email
     } catch (error) {
         next(customError(401, 'unauthorized'))
     }
@@ -55,8 +55,8 @@ userProfileRouter.patch('/gender/:id', async (req, res, next) => {
 
         if (gender !== 'male' && gender !== 'female') throw customError(404, 'invalid input')
 
-        await User.findByIdAndUpdate(id, { gender })
-        res.status(200).send('gender updated successfully')
+        const { gender: updatedGender } = await User.findByIdAndUpdate(id, { gender })
+        res.status(200).send({ gender: updatedGender }) // returns the old email
     } catch (error) {
         next(error)
     }
@@ -77,7 +77,7 @@ userProfileRouter.patch('/changepassword/:id', async (req, res, next) => {
         const hashpw = await hashPassword(newPassword)
         await User.findByIdAndUpdate(id, { password: hashpw })
 
-        res.status(200).send('password updated successfully')
+        res.status(200).send({ isUpdated: true })
 
     } catch (error) {
         next(error)
@@ -90,7 +90,6 @@ userProfileRouter.get('/userImage/:id', async (req, res, next) => {
         const { id } = req.params
 
         const userImage = await User.findById(id, 'userImage -_id') // return only userImage and exclude _id
-        console.log(userImage)
         if (!userImage) throw customError(401, 'unauthorized')
 
         res.status(200).send(userImage)
@@ -108,10 +107,10 @@ userProfileRouter.patch('/userImage/:id', imageUpload.single('userImage'), async
         // store image url
         const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}${req.file.originalname}`
 
-        const updateUser = await User.findByIdAndUpdate(id, { userImage: imagePath })
-        if (!updateUser) throw customError(401, 'unauthorized')
+        const {userImage: updatedImage} = await User.findByIdAndUpdate(id, { userImage: imagePath })
+        if (!updatedImage) throw customError(401, 'unauthorized')
 
-        res.status(200).send('done')
+        res.status(200).send({userImage: updatedImage})
 
     } catch (error) {
         next(error)

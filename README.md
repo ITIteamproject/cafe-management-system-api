@@ -13,7 +13,6 @@
 #### Response
 ```
 {
-    "_id": "63e62be8e40470d956f6eb7a",
     "username": "pass",
     "email": "pass@gmail.com",
     "gender": "male",
@@ -30,7 +29,6 @@
 #### Response
 ```
 {
-    "_id": "63e62be8e40470d956f6eb7a",
     "userImage": "image url"
 }
 ```
@@ -53,7 +51,6 @@
 #### Response
 ```
 {
-    "_id": "63e62be8e40470d956f6eb7a",
     "username": "updated username"
 }
 ```
@@ -75,7 +72,6 @@
 #### Response
 ```
 {
-    "_id": "63e62be8e40470d956f6eb7a",
     "email": "updated email"
 }
 ```
@@ -97,7 +93,6 @@
 #### Response
 ```
 {
-    "_id": "63e62be8e40470d956f6eb7a",
     "gender": "male/female"
 }
 ```
@@ -120,8 +115,7 @@
 #### Response
 ```
 {
-    "_id": "63e62be8e40470d956f6eb7a",
-    "password": "updated password"
+    "isUpdated": "true"
 }
 ```
 ---
@@ -142,7 +136,6 @@
 #### Response
 ```
 {
-    "_id": "63e62be8e40470d956f6eb7a",
     "userImage": "updated url image"
 }
 ```
