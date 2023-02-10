@@ -5,7 +5,7 @@ const userProfileRouter = express.Router()
 const imageUpload = require('../helpers/imageHelper')
 const customError = require('../customError')
 const { User } = require('../models')
-const {comparePassword, hashPassword} = require('../helpers/userHelpers')
+const { comparePassword, hashPassword } = require('../helpers/userHelpers')
 
 userProfileRouter.use(express.static('uploads'))
 
@@ -13,8 +13,8 @@ userProfileRouter.use(express.static('uploads'))
 userProfileRouter.get('/:id', async (req, res, next) => {
     try {
         const { id } = req.params
-        const userInfo = await User.findById(id) // if not found it will throw error implicitly
-        res.status(200).json({ userInfo })
+        const userInfo = await User.findById(id, 'username email gender') // if not found it will throw error implicitly
+        res.status(200).json(userInfo)
 
     } catch (error) {
         next(customError(404, 'not found'))
@@ -67,10 +67,10 @@ userProfileRouter.patch('/changepassword/:id', async (req, res, next) => {
     try {
         const { id } = req.params
         const { oldPassword, newPassword } = req.body
-        
+
         if (!oldPassword || !newPassword) throw customError(404, 'old and new passwords are required')
 
-        const {password: hashedPW} = await User.findById(id)
+        const { password: hashedPW } = await User.findById(id)
         await comparePassword(oldPassword, hashedPW)
 
         // hash new password
@@ -91,7 +91,7 @@ userProfileRouter.get('/userImage/:id', async (req, res, next) => {
 
         const userImage = await User.findById(id, 'userImage -_id') // return only userImage and exclude _id
         console.log(userImage)
-        if(!userImage) throw customError(401, 'unauthorized')
+        if (!userImage) throw customError(401, 'unauthorized')
 
         res.status(200).send(userImage)
 
@@ -107,9 +107,9 @@ userProfileRouter.patch('/userImage/:id', imageUpload.single('userImage'), async
 
         // store image url
         const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}${req.file.originalname}`
-        
+
         const updateUser = await User.findByIdAndUpdate(id, { userImage: imagePath })
-        if(!updateUser) throw customError(401, 'unauthorized')
+        if (!updateUser) throw customError(401, 'unauthorized')
 
         res.status(200).send('done')
 
