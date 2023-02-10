@@ -67,20 +67,15 @@ userProfileRouter.patch('/changepassword/:id', async (req, res, next) => {
     try {
         const { id } = req.params
         const { oldPassword, newPassword } = req.body
-
+        
         if (!oldPassword || !newPassword) throw customError(404, 'old and new passwords are required')
 
-        const oldPasswordHashed = await hashPassword(oldPassword)
-        const {password: actualPassword} = await User.findById(id, 'password -_id')
-        console.log(actualPassword);
-        if (!actualPassword) throw customError(401, 'unauthorized')
-
-        // if he signed a wrong password
-        if(actualPassword !== oldPasswordHashed) throw customError(401, 'wrong password')
+        const {password: hashedPW} = await User.findById(id)
+        await comparePassword(oldPassword, hashedPW)
 
         // hash new password
-        const hashedPassword = await hashPassword(newPassword)
-        await User.findByIdAndUpdate(id, { password: hashedPassword })
+        const hashpw = await hashPassword(newPassword)
+        await User.findByIdAndUpdate(id, { password: hashpw })
 
         res.status(200).send('password updated successfully')
 
@@ -111,7 +106,6 @@ userProfileRouter.patch('/userImage/:id', imageUpload.single('userImage'), async
         const { id } = req.params
 
         // store image url
-        // IMPORTANT: -> in deploying we will remove the port section
         const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}${req.file.originalname}`
         
         const updateUser = await User.findByIdAndUpdate(id, { userImage: imagePath })
