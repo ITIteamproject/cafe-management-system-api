@@ -1,5 +1,3 @@
-const fs = require('fs/promises')
-const path = require('path')
 const express = require('express')
 
 const userProfileRouter = express.Router()
@@ -96,11 +94,11 @@ userProfileRouter.get('/userImage/:id', async (req, res, next) => {
     try {
         const { id } = req.params
 
-        const userImageBuffer = await User.findById(id, 'userImage -_id') // return only userImage and exclude _id
-        if(!userImageBuffer) throw customError(401, 'unauthorized')
+        const userImage = await User.findById(id, 'userImage -_id') // return only userImage and exclude _id
+        console.log(userImage)
+        if(!userImage) throw customError(401, 'unauthorized')
 
-        var encodedBuffer = userImageBuffer.toString('base64');
-        res.status(200).send(userImageBuffer)
+        res.status(200).send(userImage)
 
     } catch (error) {
         next(error)
@@ -111,11 +109,12 @@ userProfileRouter.get('/userImage/:id', async (req, res, next) => {
 userProfileRouter.patch('/userImage/:id', imageUpload.single('userImage'), async (req, res, next) => {
     try {
         const { id } = req.params
-        console.log(path.join(__dirname, '..', 'uploads', req.file.originalname));
-        console.log()
-        const userImage = await fs.readFile(`./uploads/${req.file.originalname}`, 'utf8')
 
-        const updateUser = await User.findByIdAndUpdate(id, { userImage })
+        // store image url
+        // IMPORTANT: -> in deploying we will remove the port section
+        const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}${req.file.originalname}`
+        
+        const updateUser = await User.findByIdAndUpdate(id, { userImage: imagePath })
         if(!updateUser) throw customError(401, 'unauthorized')
 
         res.status(200).send('done')
@@ -124,7 +123,6 @@ userProfileRouter.patch('/userImage/:id', imageUpload.single('userImage'), async
         next(error)
     }
 })
-
 
 // get all orders by user id (with validation)
 

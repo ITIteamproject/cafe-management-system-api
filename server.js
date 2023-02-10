@@ -3,13 +3,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 const Registration = require('./routers/registration')
 const ProfileRouter = require('./routers/profile')
 
 app.use(express.json())
-app.use(express.static('public')) // for testing purposes
+app.use(express.static('uploads'))
+// app.use(express.static('public')) // for testing purposes
 
 app.use('/reg', Registration) // login signup
 app.use('/profile', ProfileRouter)
