@@ -12,7 +12,7 @@ const userRouter = express.Router()
 
 // Sign Up
 userRouter.post('/signup', userValidation, async (req, res, next) => {
-    const { username, email, password, confirmPassword, gender } = req.body;
+    const { username, email, password, confirmPassword, tel, address, gender } = req.body;
 
     const emailExits = await User.findOne({ email });
     if (emailExits) {
@@ -30,6 +30,8 @@ userRouter.post('/signup', userValidation, async (req, res, next) => {
                         username,
                         email,
                         password: hashedPassword,
+                        tel,
+                        address,
                         gender
                     });
                     const token = await signUserToken(user._id)
