@@ -3,8 +3,8 @@ node_modules/
 .eslintrc.json
 .prettierrc
 seeder.js/
-/seeder.js/
-/.vscode/
+.vscode/
 seeder.js
-/_data/
+_data/
 notes.txt
+test.js
