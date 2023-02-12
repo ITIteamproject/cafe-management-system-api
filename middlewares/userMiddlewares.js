@@ -7,8 +7,8 @@ const verifyAsync = util.promisify(jwt.verify);
 const secretKey = process.env.SECRET_KEY || 'hgdnckhnd';
 
 const authorizeUser = async (req, res, next) => {
-    const { authorization: token } = req.headers;
     try {
+        const { authorization: token } = req.headers;
         const payload = await verifyAsync(token, secretKey);
         req.params.id = payload.id
         next();

@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 const Registration = require('./routers/registration');
 const ProfileRouter = require('./routers/profile');
 const productRouter = require('./routers/productRouter');
+const purchaseRouter = require('./routers/purchase')
 
 app.use(express.json());
 app.use(express.static('uploads'));
@@ -16,6 +17,7 @@ app.use(express.static('uploads'));
 app.use('/reg', Registration); // login signup
 app.use('/profile', ProfileRouter);
 app.use('/api/products', productRouter);
+app.use('/purchase', purchaseRouter)
 
 // error handling middleware
 app.use((err, req, res, next) => {
