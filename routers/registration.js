@@ -1,6 +1,6 @@
 const express = require('express')
 const { userValidation } = require('../middlewares/userMiddlewares')
-const { User } = require('../models')
+const User = require('../models/userModel')
 const customError = require('../customError')
 const {
     comparePassword,
