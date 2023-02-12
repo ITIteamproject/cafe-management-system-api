@@ -3,9 +3,9 @@
 # Documentation
 ## Requests
 
-### GET | Get User Profile Info By Id
+### GET | Get User Profile Info
 ```
-/profile/:id
+/profile
 ```
 #### Request Headers
 * Authorization: token
@@ -21,7 +21,7 @@
 ---
 ### GET | Get User Profile Image
 ```
-/profile/userImage/:id
+/profile/userImage
 ```
 #### Request Headers
 * Authorization: token
@@ -35,7 +35,7 @@
 ---
 ### PATCH | Edit Username
 ```
-/profile/username/:id
+/profile/username
 ```
 #### Request Headers
 * Authorization: token
@@ -57,7 +57,7 @@
 ---
 ### PATCH | Edit Email
 ```
-/profile/email/:id
+/profile/email
 ```
 #### Request Headers
 * Authorization: token
@@ -78,7 +78,7 @@
 ---
 ### PATCH | Edit Gender
 ```
-/profile/gender/:id
+/profile/gender
 ```
 #### Request Headers
 * Authorization: token
@@ -99,7 +99,7 @@
 ---
 ### PATCH | Change Password
 ```
-/profile/changepassword/:id
+/profile/changepassword
 ```
 #### Request Headers
 * Authorization: token
@@ -121,7 +121,7 @@
 ---
 ### PATCH | Edit user Profile Image
 ```
-/profile/userImage/:id
+/profile/userImage
 ```
 #### Request Headers
 * Authorization: token

@@ -1,2 +1,10 @@
 node_modules/
 .env
+.eslintrc.json
+.prettierrc
+seeder.js/
+/seeder.js/
+/.vscode/
+seeder.js
+/_data/
+notes.txt

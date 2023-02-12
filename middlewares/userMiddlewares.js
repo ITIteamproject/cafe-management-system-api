@@ -1,17 +1,16 @@
 const util = require('util');
 const jwt = require('jsonwebtoken');
 const joiSchema = require('../validations/userValidation')
+const customError = require('../customError')
 
 const verifyAsync = util.promisify(jwt.verify);
 const secretKey = process.env.SECRET_KEY || 'hgdnckhnd';
 
 const authorizeUser = async (req, res, next) => {
-    const { id } = req.params;
     const { authorization: token } = req.headers;
     try {
         const payload = await verifyAsync(token, secretKey);
-        if (payload.id !== id)
-            throw customError(403, 'you are not authorized to perform this action!');
+        req.params.id = payload.id
         next();
     } catch (error) {
         next(customError(403, 'you are not authorized to perform this action!'));

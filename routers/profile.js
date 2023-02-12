@@ -6,11 +6,10 @@ const imageUpload = require('../helpers/imageHelper')
 const customError = require('../customError')
 const { User } = require('../models')
 const { comparePassword, hashPassword } = require('../helpers/userHelpers')
-
-userProfileRouter.use(express.static('uploads'))
+const { authorizeUser } = require('../middlewares/userMiddlewares')
 
 // get user info
-userProfileRouter.get('/:id', async (req, res, next) => {
+userProfileRouter.get('/', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
         const userInfo = await User.findById(id, 'username email gender') // if not found it will throw error implicitly
@@ -22,7 +21,7 @@ userProfileRouter.get('/:id', async (req, res, next) => {
 })
 
 // edit username
-userProfileRouter.patch('/username/:id', async (req, res, next) => {
+userProfileRouter.patch('/username', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
         const { username } = req.body
@@ -35,7 +34,7 @@ userProfileRouter.patch('/username/:id', async (req, res, next) => {
 })
 
 // edit email
-userProfileRouter.patch('/email/:id', async (req, res, next) => {
+userProfileRouter.patch('/email', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
         const { email } = req.body
@@ -48,7 +47,7 @@ userProfileRouter.patch('/email/:id', async (req, res, next) => {
 })
 
 // edit gender
-userProfileRouter.patch('/gender/:id', async (req, res, next) => {
+userProfileRouter.patch('/gender', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
         const { gender } = req.body
@@ -63,7 +62,7 @@ userProfileRouter.patch('/gender/:id', async (req, res, next) => {
 })
 
 // change passwd
-userProfileRouter.patch('/changepassword/:id', async (req, res, next) => {
+userProfileRouter.patch('/changepassword', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
         const { oldPassword, newPassword } = req.body
@@ -85,7 +84,7 @@ userProfileRouter.patch('/changepassword/:id', async (req, res, next) => {
 })
 
 // get user picture
-userProfileRouter.get('/userImage/:id', async (req, res, next) => {
+userProfileRouter.get('/userImage', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
 
@@ -100,17 +99,17 @@ userProfileRouter.get('/userImage/:id', async (req, res, next) => {
 })
 
 // edit user picture
-userProfileRouter.patch('/userImage/:id', imageUpload.single('userImage'), async (req, res, next) => {
+userProfileRouter.patch('/userImage', authorizeUser, imageUpload.single('userImage'), async (req, res, next) => {
     try {
         const { id } = req.params
 
         // store image url
         const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}${req.file.originalname}`
 
-        const {userImage: updatedImage} = await User.findByIdAndUpdate(id, { userImage: imagePath })
+        const { userImage: updatedImage } = await User.findByIdAndUpdate(id, { userImage: imagePath })
         if (!updatedImage) throw customError(401, 'unauthorized')
 
-        res.status(200).send({userImage: updatedImage})
+        res.status(200).send({ userImage: updatedImage })
 
     } catch (error) {
         next(error)

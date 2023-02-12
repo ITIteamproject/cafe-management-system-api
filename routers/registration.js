@@ -5,35 +5,37 @@ const customError = require('../customError')
 const {
     comparePassword,
     signUserToken,
-    hashPassword 
+    hashPassword
 } = require('../helpers/userHelpers')
 
 const userRouter = express.Router()
 
 // Sign Up
 userRouter.post('/signup', userValidation, async (req, res, next) => {
-    const { username, email, password, confirmPassword, gender } = req.body;
+    const { username, email, password, confirmPassword, tel, address, gender } = req.body;
 
-    const existEmail = await User.findOne({ email });
-    if (existEmail) {
+    const emailExits = await User.findOne({ email });
+    if (emailExits) {
         res.status(404).send('username alredy exist');
     } else {
         if (password != confirmPassword) {
             res.status(404).send('password not match!');
         } else {
-            if (gender != 'f' && gender != 'm') {
+            if (gender != 'female' && gender != 'male') {
                 res.status(404).send('please enter f or m for gender');
             } else {
                 try {
                     const hashedPassword = await hashPassword(password);
-                    await User.create({
+                    const user = await User.create({
                         username,
                         email,
                         password: hashedPassword,
-                        confirmPassword: hashedPassword,
+                        tel,
+                        address,
                         gender
                     });
-                    res.status(200).send('sign up succssesfully');
+                    const token = await signUserToken(user._id)
+                    res.status(200).send({accessToken: token});
 
                 } catch (error) {
                     next(error);
@@ -49,10 +51,10 @@ userRouter.post('/login', userValidation, async (req, res, next) => {
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
-        if (!user) throw customError(401, 'invalid username or password');
+        if (!user) throw customError(401, 'invalid email or password');
         await comparePassword(password, user.password);
         const token = await signUserToken(user.id);
-        res.status(200).send({ accessToken: token, data: 'logged in succssesfully' });
+        res.status(200).send({ accessToken: token });
     } catch (error) {
         next(error);
     }
