@@ -6,7 +6,8 @@ const Product = require('../models/productModel');
 // @route       Get /api/products
 // @access      Public
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
-  const products = await Product.find();
+  // Get all products or specify from query parameters
+  const products = await Product.find(req.query);
   res
     .status(200)
     .json({ success: true, count: products.length, data: products });
@@ -30,7 +31,13 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
 // @route       Post /api/products/:id
 // @access      Private
 exports.createProduct = asyncHandler(async (req, res, next) => {
-  const product = await Product.create(req.body);
+  const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.file.originalname}`;
+  const product = await Product.create({
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    photo: imagePath
+  });
   res.status(201).json({
     success: true,
     data: product
