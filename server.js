@@ -20,13 +20,13 @@ app.use('/profile', ProfileRouter);
 app.use('/api/products', productRouter);
 app.use('/purchase', purchaseRouter)
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // Same Code embedded in at EndOfFile ./middlewares/errorHandler.js
-// app.use((err, req, res, next) => {
-//   if (!err.statusCode) err.message = 'something went wrong';
-//   res.status(err.statusCode || 500).send(err.message);
-// });
+app.use((err, req, res, next) => {
+  if (!err.statusCode) err.message = 'something went wrong';
+  res.status(err.statusCode || 500).send(err.message);
+});
 
 app.listen(port, () => {
   console.log(`server is listening on port ${port}`);
