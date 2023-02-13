@@ -2,7 +2,7 @@ const CustomError = require('../helpers/customError');
 const asyncHandler = require('../middlewares/asyncHandler');
 const Product = require('../models/productModel');
 
-// @desc        Get all products
+// @desc        Get all products -- or use SearchQuery
 // @route       Get /api/products
 // @access      Public
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
@@ -31,13 +31,7 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
 // @route       Post /api/products/:id
 // @access      Private
 exports.createProduct = asyncHandler(async (req, res, next) => {
-  const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.file.originalname}`;
-  const product = await Product.create({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    photo: imagePath
-  });
+  const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
     data: product
@@ -74,4 +68,26 @@ exports.deleteProduct = asyncHandler(async (req, res, next) => {
     );
   }
   res.status(204).json({ success: true, date: {} });
+});
+
+// @desc        Upload photo for bootcamp
+// @route       PUT /api/products/:id/photo
+// @access      Private
+exports.uploadProductPhoto = asyncHandler(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+  if (!product) {
+    return next(
+      new CustomError(`Product not found with id of ${req.params.id}`, 404)
+    );
+  }
+
+  if (!req.file) {
+    return next(new CustomError('Please upload a file', 400));
+  }
+
+  const imgPath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.params.id}_${req.file.originalname}`;
+
+  await Product.findByIdAndUpdate(req.params.id, { photo: imgPath });
+
+  res.status(200).json({ success: true, data: imgPath });
 });
