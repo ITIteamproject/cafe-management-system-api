@@ -21,19 +21,23 @@ purchaseRouter.post('/', async (req, res, next) => {
 
         // get user
         const user = await User.findById(userId)
-        
+        let order;
         // create orders for user
         for (let i = 0; i < productIds.length; i++) {
-            const order = await Order.create({
+            order = await Order.create({
                 userId,
                 productId: productIds[i],
                 status: 'pending'
             })
+
+            // push order id to user orders
             user.orders.push(order._id)
+            await user.save()
         }
-        // search about populate() method
-        
-        res.status(200).send(user)
+
+        const userOrders = await user.populate('orders')
+       
+        res.status(200).send(userOrders.orders)
 
     } catch (error) {
         next(error)

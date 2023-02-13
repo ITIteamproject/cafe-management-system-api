@@ -35,7 +35,7 @@ app.listen(port, () => {
 // connect to database
 // mongo atlas url-> mongodb+srv://member:member123@cluster.cmlunqp.mongodb.net/cafeDB
 mongoose.set('strictQuery', true);
-mongoose.connect(process.env.DB, err => {
+mongoose.connect('mongodb://127.0.0.1:27017/itiProject', err => {
   if (err) console.log(err, "can't connect to database");
   console.log('connected to db successfully');
 });

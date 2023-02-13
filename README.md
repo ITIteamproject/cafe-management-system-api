@@ -187,3 +187,37 @@
 }
 ```
 ---
+
+### POST | Purchase (make an order)
+```
+/purchase
+```
+#### Request Headers
+* Authorization: token
+* Content-Type: application/json
+
+#### Request Body
+```
+["product1 id", "product2 id"]
+```
+#### Response 
+returns list of orders
+```
+[
+    {
+        "_id": "63e9c8fce1e5bff66fc1d029",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": "63e961c66b87884e29323042",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "_id": "63e9c8fce1e5bff66fc1d02c",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": "63e962176b87884e29323044",
+        "status": "pending",
+        "__v": 0
+    }
+]
+```
+---
