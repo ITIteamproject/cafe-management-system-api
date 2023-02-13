@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema
 
 // Schemas
 const UserSchema = new mongoose.Schema({
@@ -14,11 +15,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  confirmPassword: {
-    type: String,
-    required: true
+  tel: {
+    type: Number,
+    required: false
   },
-
+  address: {
+    type: String,
+    required: false
+  },
   gender: {
     type: String,
     required: true
@@ -26,11 +30,13 @@ const UserSchema = new mongoose.Schema({
   userImage: {
     type: String,
     required: false
-  }
+  },
+  orders: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Order'
+  }]
 });
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = {
-  User
-};
+module.exports = User

@@ -4,7 +4,7 @@ const userProfileRouter = express.Router()
 
 const imageUpload = require('../helpers/imageHelper')
 const customError = require('../customError')
-const { User } = require('../models')
+const User = require('../models/userModel')
 const { comparePassword, hashPassword } = require('../helpers/userHelpers')
 const { authorizeUser } = require('../middlewares/userMiddlewares')
 
