@@ -187,3 +187,66 @@
 }
 ```
 ---
+
+### POST | Purchase (make an order)
+```
+/purchase
+```
+#### Request Headers
+* Authorization: token
+* Content-Type: application/json
+
+#### Request Body
+```
+["product1 id", "product2 id"]
+```
+#### Response 
+returns list of orders
+```
+[
+    {
+        "_id": "63e9c8fce1e5bff66fc1d029",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": "63e961c66b87884e29323042",
+        "status": "pending",
+        "__v": 0
+    },
+    {
+        "_id": "63e9c8fce1e5bff66fc1d02c",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": "63e962176b87884e29323044",
+        "status": "pending",
+        "__v": 0
+    }
+]
+```
+
+### GET | get user orders
+```
+/orders
+```
+#### Request Headers
+* Authorization: token
+* Content-Type: application/json
+
+```
+#### Response 
+returns list of user orders
+```
+[
+    {
+        "_id": "63e963956b87884e29323048",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": {
+            "_id": "63e961c66b87884e29323042",
+            "name": "coffee",
+            "price": 10,
+            "description": "amazing drink",
+            "__v": 0
+        },
+        "status": "pending",
+        "__v": 0
+    }
+]
+```
+---
