@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -8,6 +9,8 @@ const port = process.env.PORT || 3000;
 const Registration = require('./routers/registration');
 const ProfileRouter = require('./routers/profile');
 const productRouter = require('./routers/productRouter');
+const purchaseRouter = require('./routers/purchase')
+const orderRouter = require('./routers/order')
 
 app.use(express.json());
 app.use(express.static('uploads'));
@@ -16,8 +19,12 @@ app.use(express.static('uploads'));
 app.use('/reg', Registration); // login signup
 app.use('/profile', ProfileRouter);
 app.use('/api/products', productRouter);
+app.use('/purchase', purchaseRouter)
+app.use('/orders', orderRouter)
 
-// error handling middleware
+// app.use(errorHandler);
+
+// Same Code embedded in at EndOfFile ./middlewares/errorHandler.js
 app.use((err, req, res, next) => {
   if (!err.statusCode) err.message = 'something went wrong';
   res.status(err.statusCode || 500).send(err.message);

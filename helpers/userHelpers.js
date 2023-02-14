@@ -7,8 +7,6 @@ const customError = require('../customError')
 const saltRounds = 10;
 const secretKey = process.env.SECRET_KEY || "kdeimcosdfvm"
 const signAsync = util.promisify(jwt.sign)
-const verifyAsync = util.promisify(jwt.verify)
-
 
 const hashPassword = async (password) => await bcrypt.hash(password, saltRounds);
 
