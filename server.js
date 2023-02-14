@@ -40,7 +40,10 @@ app.listen(port, () => {
 // connect to database
 // mongo atlas url-> mongodb+srv://member:member123@cluster.cmlunqp.mongodb.net/cafeDB
 mongoose.set('strictQuery', true);
-mongoose.connect('mongodb://127.0.0.1:27017/itiProject', err => {
-  if (err) console.log(err, "can't connect to database");
-  console.log('connected to db successfully');
-});
+mongoose.connect(
+  'mongodb+srv://ahmed123:ahmed123@iticluster.ca2atzv.mongodb.net/cafe?retryWrites=true&w=majority',
+  err => {
+    if (err) console.log(err, "can't connect to database");
+    console.log(`connected to DB on ${mongoose.connection.host}`);
+  }
+);
