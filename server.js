@@ -25,13 +25,13 @@ app.use('/api/products', productRouter);
 app.use('/purchase', purchaseRouter);
 app.use('/orders', orderRouter);
 
-// app.use(errorHandler);
+app.use(errorHandler);
 
 // Same Code embedded in at EndOfFile ./middlewares/errorHandler.js
-app.use((err, req, res, next) => {
-  if (!err.statusCode) err.message = 'something went wrong';
-  res.status(err.statusCode || 500).send(err.message);
-});
+// app.use((err, req, res, next) => {
+//   if (!err.statusCode) err.message = 'something went wrong';
+//   res.status(err.statusCode || 500).send(err.message);
+// });
 
 app.listen(port, () => {
   console.log(`server is listening on port ${port}`);
@@ -40,10 +40,7 @@ app.listen(port, () => {
 // connect to database
 // mongo atlas url-> mongodb+srv://member:member123@cluster.cmlunqp.mongodb.net/cafeDB
 mongoose.set('strictQuery', true);
-mongoose.connect(
-  'mongodb+srv://ahmed123:ahmed123@iticluster.ca2atzv.mongodb.net/cafe?retryWrites=true&w=majority',
-  err => {
-    if (err) console.log(err, "can't connect to database");
-    console.log(`connected to DB on ${mongoose.connection.host}`);
-  }
-);
+mongoose.connect(process.env.DB, err => {
+  if (err) console.log(err, "can't connect to database");
+  console.log(`connected to DB on ${mongoose.connection.host}`);
+});
