@@ -220,4 +220,33 @@ returns list of orders
     }
 ]
 ```
+
+### GET | get user orders
+```
+/orders
+```
+#### Request Headers
+* Authorization: token
+* Content-Type: application/json
+
+```
+#### Response 
+returns list of user orders
+```
+[
+    {
+        "_id": "63e963956b87884e29323048",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": {
+            "_id": "63e961c66b87884e29323042",
+            "name": "coffee",
+            "price": 10,
+            "description": "amazing drink",
+            "__v": 0
+        },
+        "status": "pending",
+        "__v": 0
+    }
+]
+```
 ---

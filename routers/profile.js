@@ -136,5 +136,6 @@ userProfileRouter.get('/orders', authorizeUser, async (req, res, next) => {
 })
 
 // cancel pending order 
+userProfileRouter.patch('')
 
 module.exports = userProfileRouter
