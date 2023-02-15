@@ -2,11 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
-// const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// const errorHandler = require('./middlewares/errorHandler');
 const Registration = require('./routers/registration');
 const AdminRouter = require('./routers/adminRouter');
 const ProfileRouter = require('./routers/profile');

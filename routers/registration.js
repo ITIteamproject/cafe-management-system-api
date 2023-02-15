@@ -12,13 +12,13 @@ const userRouter = express.Router()
 
 // Sign Up
 userRouter.post('/signup', async (req, res, next) => {
-    const { username, email, password, confirmPassword, gender } = req.body;
-
+    const { username, email, password, repassword, gender } = req.body;
+    console.log(req.body)
     const emailExits = await User.findOne({ email });
     if (emailExits) {
         res.status(404).send('username alredy exist');
     } else {
-        if (password != confirmPassword) {
+        if (password != repassword) {
             res.status(404).send('password not match!');
         } else {
             if (gender != 'female' && gender != 'male') {
@@ -30,7 +30,8 @@ userRouter.post('/signup', async (req, res, next) => {
                         username,
                         email,
                         password: hashedPassword,
-                        gender
+                        gender,
+                        userImage: `${req.protocol}://${req.hostname}:${process.env.PORT}/defProfileImage.png`
                     });
                     const token = await signUserToken(user._id)
                     res.status(200).send({accessToken: token});

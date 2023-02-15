@@ -5,7 +5,6 @@ const userProfileRouter = express.Router()
 const imageUpload = require('../helpers/imageHelper')
 const customError = require('../customError')
 const User = require('../models/userModel')
-const Order = require('../models/orderModel')
 const { comparePassword, hashPassword } = require('../helpers/userHelpers')
 const { authorizeUser } = require('../middlewares/userMiddlewares')
 
@@ -105,7 +104,7 @@ userProfileRouter.patch('/userImage', authorizeUser, imageUpload.single('userIma
         const { id } = req.params
 
         // store image url
-        const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}${req.file.originalname}`
+        const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}_${req.file.originalname}`
 
         const { userImage: updatedImage } = await User.findByIdAndUpdate(id, { userImage: imagePath })
         if (!updatedImage) throw customError(401, 'unauthorized')
@@ -116,26 +115,5 @@ userProfileRouter.patch('/userImage', authorizeUser, imageUpload.single('userIma
         next(error)
     }
 })
-
-// get all orders by user id (with validation)
-userProfileRouter.get('/orders', authorizeUser, async (req, res, next) => {
-    try {
-        const { id } = req.params
-        const userOrders = await Order.find({ userId: id })
-
-        let popOrders = [];
-        for(let i=0; i<userOrders.length; i++) {
-            const order = await userOrders[i].populate('productId')
-            popOrders.push(order)
-        }
-
-        res.status(200).json(popOrders)
-    } catch (error) {
-        next(error)
-    }
-})
-
-// cancel pending order 
-userProfileRouter.patch('')
 
 module.exports = userProfileRouter

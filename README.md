@@ -119,6 +119,20 @@
 }
 ```
 ---
+### GET | get user Profile Image
+```
+/profile/userImage
+```
+#### Request Headers
+* Authorization: token
+
+```
+#### Response
+```
+{
+    "userImage": "image url"
+}
+```
 ### PATCH | Edit user Profile Image
 ```
 /profile/userImage
@@ -139,6 +153,7 @@
     "userImage": "updated url image"
 }
 ```
+
 ---
 ### POST | Login
 ```
