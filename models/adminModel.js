@@ -18,15 +18,7 @@ const AdminSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: true
-  },
-  userImage: {
-    type: String,
-    required: false
   }
-//   orders: [{
-//     type: Schema.Types.ObjectId,
-//     ref: 'Order'
-//   }]
 });
 
 const Admin = mongoose.model('Admin', AdminSchema);
