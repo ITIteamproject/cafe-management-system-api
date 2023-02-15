@@ -5,7 +5,7 @@ const util = require('util')
 const customError = require('../customError')
 
 const saltRounds = 10;
-const secretKey = process.env.SECRET_KEY || "kdeimcosdfvm"
+const secretKey = process.env.SECRET_KEY || "hgdnckhnd"
 const signAsync = util.promisify(jwt.sign)
 
 const hashPassword = async (password) => await bcrypt.hash(password, saltRounds);
@@ -17,9 +17,6 @@ const comparePassword = async (password, hash) => {
 
 // grand token to user 
 const signUserToken = (id) => signAsync({ id }, secretKey)
-
-// verify on token
-
 
 module.exports = {
     comparePassword,

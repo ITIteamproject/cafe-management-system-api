@@ -8,6 +8,7 @@ const secretKey = process.env.SECRET_KEY || 'hgdnckhnd';
 
 const authorizeUser = async (req, res, next) => {
     try {
+        console.log(req.headers)
         const { authorization: token } = req.headers;
         const payload = await verifyAsync(token, secretKey);
         req.params.id = payload.id

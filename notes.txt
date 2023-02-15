@@ -1,3 +1,0 @@
-try to use faker 
-https://www.npmjs.com/package/@faker-js/faker
-https://github.com/faker-js/faker

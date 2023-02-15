@@ -5,8 +5,6 @@ const errorHandler = (err, req, res, next) => {
 
   error.message = err.message;
 
-  console.log(err);
-
   // Mongoose bad ObjectId
   if (err.name === 'CastError') {
     error = new CustomError(`Resource not found with id of ${err.value}`, 404);
@@ -19,7 +17,8 @@ const errorHandler = (err, req, res, next) => {
 
   // Mongoose validation error
   if (err.name === 'ValidationError') {
-    const message = Object.values(err.errors).map(val => val.message);
+    // const message = Object.values(err.errors).map(val => val.message);
+    const message = err.message;
     error = new CustomError(message, 400);
   }
   res

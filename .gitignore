@@ -1,10 +1,11 @@
 node_modules/
-.env
 .eslintrc.json
 .prettierrc
 seeder.js/
 .vscode/
+/.vscode/
 seeder.js
 _data/
 notes.txt
 test.js
+data.js

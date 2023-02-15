@@ -1,6 +1,6 @@
 module.exports = (status, messgae) => {
-    const error = new Error(messgae)
-    error.statusCode = status
-    
-    return error
-}
+  const error = new Error(messgae);
+  error.statusCode = status;
+
+  return error;
+};
