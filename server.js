@@ -1,22 +1,25 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const errorHandler = require('./middlewares/errorHandler');
-
+// const errorHandler = require('./middlewares/errorHandler');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
 const Registration = require('./routers/registration');
+const AdminRouter = require('./routers/adminRouter');
 const ProfileRouter = require('./routers/profile');
 const productRouter = require('./routers/productRouter');
-const purchaseRouter = require('./routers/purchase')
-const orderRouter = require('./routers/order')
+const purchaseRouter = require('./routers/purchase');
+const orderRouter = require('./routers/order');
 
+app.use(cors());
 app.use(express.json());
 app.use(express.static('uploads'));
 // app.use(express.static('public')) // for testing purposes
 
 app.use('/reg', Registration); // login signup
+app.use('/admin', AdminRouter); // admin
 app.use('/profile', ProfileRouter);
 app.use('/api/products', productRouter);
 app.use('/purchase', purchaseRouter)
@@ -39,5 +42,4 @@ app.listen(port, () => {
 mongoose.set('strictQuery', true);
 mongoose.connect('mongodb://127.0.0.1:27017/itiProject', err => {
   if (err) console.log(err, "can't connect to database");
-  console.log('connected to db successfully');
 });
