@@ -24,7 +24,6 @@ adminRouter.post('/signup', async (req, res, next) => {
                 username,
                 email,
                 password: hashedPassword,
-                confirmPassword: hashedPassword,
                 gender
             });
             const token = await signUserToken(admin._id);
