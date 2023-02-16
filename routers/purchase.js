@@ -24,11 +24,13 @@ purchaseRouter.post('/', async (req, res, next) => {
         // create orders for user
         for (let i = 0; i < productIds.length; i++) {
             const productExist = await Order.findOne({ productId: productIds[i] })
-            console.log(productExist)
             if (productExist) {
+
+                const pro = await productExist.populate('productId')                
+                console.log(pro)
                 productExist.amount++;
-                productExist.totalPrice *= 2;
-                productExist.save();
+                productExist.totalPrice = productExist.totalPrice + pro.productId.price;
+                await productExist.save();
             } else {
                 const product = await Product.findById(productIds[i]);
 
