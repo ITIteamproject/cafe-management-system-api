@@ -20,6 +20,25 @@ userProfileRouter.get('/', authorizeUser, async (req, res, next) => {
     }
 })
 
+// edit user info (username, email)
+userProfileRouter.patch('/', authorizeUser, async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const { username, email, gender } = req.body
+        console.log(req.body)
+
+        const userInfo = {
+            username,
+            email,
+            gender
+        }
+        const updatedInfo = await User.findByIdAndUpdate(id, userInfo)
+        
+        res.status(200).json(updatedInfo)
+    } catch (error) {
+        next(error)
+    }
+})
 // edit username
 userProfileRouter.patch('/username', authorizeUser, async (req, res, next) => {
     try {
