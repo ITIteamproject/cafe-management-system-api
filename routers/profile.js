@@ -13,6 +13,7 @@ userProfileRouter.get('/', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
         const userInfo = await User.findById(id, 'username email gender') // if not found it will throw error implicitly
+
         res.status(200).json(userInfo)
 
     } catch (error) {
@@ -20,7 +21,7 @@ userProfileRouter.get('/', authorizeUser, async (req, res, next) => {
     }
 })
 
-// edit user info (username, email)
+// edit user info (username, email, gender)
 userProfileRouter.patch('/', authorizeUser, async (req, res, next) => {
     try {
         const { id } = req.params
@@ -32,8 +33,8 @@ userProfileRouter.patch('/', authorizeUser, async (req, res, next) => {
             email,
             gender
         }
-        const updatedInfo = await User.findByIdAndUpdate(id, userInfo)
-        
+        const updatedInfo = await User.findByIdAndUpdate(id, userInfo, { new: true })
+
         res.status(200).json(updatedInfo)
     } catch (error) {
         next(error)
@@ -45,8 +46,8 @@ userProfileRouter.patch('/username', authorizeUser, async (req, res, next) => {
         const { id } = req.params
         const { username } = req.body
 
-        const { username: updatedName } = await User.findByIdAndUpdate(id, { username })
-        res.status(200).send({ username: updatedName }) // returns the old username
+        const { username: updatedName } = await User.findByIdAndUpdate(id, { username }, { new: true })
+        res.status(200).send({ username: updatedName })
     } catch (error) {
         next(customError(401, 'unauthorized'))
     }
@@ -58,8 +59,8 @@ userProfileRouter.patch('/email', authorizeUser, async (req, res, next) => {
         const { id } = req.params
         const { email } = req.body
 
-        const { email: updatedEmail } = await User.findByIdAndUpdate(id, { email })
-        res.status(200).send({ email: updatedEmail }) // returns the old email
+        const { email: updatedEmail } = await User.findByIdAndUpdate(id, { email }, { new: true })
+        res.status(200).send({ email: updatedEmail })
     } catch (error) {
         next(customError(401, 'unauthorized'))
     }
@@ -73,8 +74,8 @@ userProfileRouter.patch('/gender', authorizeUser, async (req, res, next) => {
 
         if (gender !== 'male' && gender !== 'female') throw customError(404, 'invalid input')
 
-        const { gender: updatedGender } = await User.findByIdAndUpdate(id, { gender })
-        res.status(200).send({ gender: updatedGender }) // returns the old email
+        const { gender: updatedGender } = await User.findByIdAndUpdate(id, { gender }, { new: true })
+        res.status(200).send({ gender: updatedGender })
     } catch (error) {
         next(error)
     }
@@ -125,7 +126,7 @@ userProfileRouter.patch('/userImage', authorizeUser, imageUpload.single('userIma
         // store image url
         const imagePath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${id}_${req.file.originalname}`
 
-        const { userImage: updatedImage } = await User.findByIdAndUpdate(id, { userImage: imagePath })
+        const { userImage: updatedImage } = await User.findByIdAndUpdate(id, { userImage: imagePath }, { new: true })
         if (!updatedImage) throw customError(401, 'unauthorized')
 
         res.status(200).send({ userImage: updatedImage })

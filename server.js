@@ -13,6 +13,7 @@ const ProfileRouter = require('./routers/profile');
 const productRouter = require('./routers/productRouter');
 const purchaseRouter = require('./routers/purchase');
 const orderRouter = require('./routers/order');
+const promotionRouter = require('./routers/promotion')
 
 app.use(cors())
 app.use(express.json());
@@ -24,7 +25,7 @@ app.use('/reg', Registration); // login signup
 app.use('/admin', AdminRouter); // admin
 app.use('/profile', ProfileRouter);
 app.use('/api/products', productRouter);
-
+app.use('/promotions', promotionRouter);
 app.use('/purchase', purchaseRouter);
 app.use('/orders', orderRouter);
 
