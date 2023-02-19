@@ -23,7 +23,7 @@ purchaseRouter.post('/', async (req, res, next) => {
         let order;
         // create orders for user
         for (let i = 0; i < productIds.length; i++) {
-            const productExist = await Order.findOne({ productId: productIds[i] })
+            const productExist = await Order.findOne({ productId: productIds[i] , userId})
             if (productExist) {
 
                 const pro = await productExist.populate('productId')                
@@ -49,7 +49,6 @@ purchaseRouter.post('/', async (req, res, next) => {
         }
 
         const userOrders = await user.populate('orders')
-
         res.status(200).send(userOrders.orders)
 
     } catch (error) {

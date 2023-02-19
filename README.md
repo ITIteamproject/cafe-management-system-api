@@ -19,6 +19,30 @@
 }
 ```
 ---
+### PATCH | Edit User Profile Info
+```
+/profile
+```
+#### Request Headers
+* Authorization: token
+
+#### Request body
+```
+{
+    "email": "foo@gmail.com",
+    "username": "foo",
+    "gender": "male"
+}
+```
+#### Response
+```
+{
+    "email": "foo@gmail.com",
+    "username": "foo",
+    "gender": "male"
+}
+```
+---
 ### GET | Get User Profile Image
 ```
 /profile/userImage
@@ -126,13 +150,13 @@
 #### Request Headers
 * Authorization: token
 
-```
 #### Response
 ```
 {
     "userImage": "image url"
 }
 ```
+---
 ### PATCH | Edit user Profile Image
 ```
 /profile/userImage
@@ -153,11 +177,32 @@
     "userImage": "updated url image"
 }
 ```
-
 ---
-### POST | Login
+### POST | User Login
 ```
 /reg/login
+```
+#### Request Headers
+* Authorization: token
+* Content-Type: application/json
+
+#### Request Body
+```
+{
+    "email": "user@gmail.com",
+    "password": "1234"
+}
+```
+#### Response
+```
+{
+    "accessToken": "token"
+}
+```
+---
+### POST | Admin Login
+```
+/admin/login
 ```
 #### Request Headers
 * Authorization: token
@@ -202,7 +247,6 @@
 }
 ```
 ---
-
 ### POST | Purchase (make an order)
 ```
 /purchase
@@ -235,7 +279,7 @@ returns list of orders
     }
 ]
 ```
-
+---
 ### GET | get user orders
 ```
 /orders
@@ -244,7 +288,6 @@ returns list of orders
 * Authorization: token
 * Content-Type: application/json
 
-```
 #### Response 
 returns list of user orders
 ```
@@ -263,5 +306,21 @@ returns list of user orders
         "__v": 0
     }
 ]
+```
+---
+### DELETE | cancel user order
+```
+/orders/?orderId=123
+```
+#### Request Headers
+* Authorization: token
+* Content-Type: application/json
+
+#### Response 
+returns list of user orders
+```
+{
+    "isCanceled": true
+}
 ```
 ---
