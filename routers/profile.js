@@ -136,4 +136,15 @@ userProfileRouter.patch('/userImage', authorizeUser, imageUpload.single('userIma
     }
 })
 
+// get all users
+userProfileRouter.get('/all', async (req, res, next) => {
+    try {
+        const users = await User.find({})
+        res.status(200).json(users)
+    
+    } catch (error) {
+        next(error)        
+    }
+})
+
 module.exports = userProfileRouter

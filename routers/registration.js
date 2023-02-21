@@ -59,11 +59,4 @@ userRouter.post('/login', async (req, res, next) => {
     }
 })
 
-// get all users
-// just for development purposes
-userRouter.get('/', async (req, res, next) => {
-    const allusers = await User.find({})
-    res.status(200).json(allusers)
-})
-
 module.exports = userRouter

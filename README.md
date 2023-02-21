@@ -241,7 +241,38 @@
     "userImage": "updated url image"
 }
 ```
+---
+### GET | Get all users
 
+```
+/profile/userImage
+```
+#### Response
+
+```
+[
+    {
+        "_id": "63ec1ad0048d87baf78c10a3",
+        "username": "abdallahnagy",
+        "email": "abdallahnagy",
+        "password": "$2b$10$pf7N5n1uy9h9FsVXhhPiievOGP2qQ5gPc0cLS44t9pyPg72J0ZrSi",
+        "gender": "male",
+        "orders": [
+            "63ee8a1aa7275c207a25a1bc",
+            "63ee8ffe0ed264678a07bd6f",
+            "63ee8fff0ed264678a07bd74",
+            "63ee90659c958f6618044fec",
+            "63ee90669c958f6618044ff1",
+            "63ee91357b9e04c6db5beb2b",
+            "63ee93068aecead3066f2847",
+            "63ee9400ca8c05c234379b0d",
+            "63ee94905f424bea2c86b80f"
+        ],
+        "__v": 33,
+        "userImage": "http://localhost:3000/63ec1ad0048d87baf78c10a3_man.png"
+    }
+]
+```
 ---
 
 ### POST | User Login
@@ -437,6 +468,49 @@ returns list of user orders
 
 ---
 
+### GET | get all orders
+
+```
+/orders/all
+```
+#### Response
+returns array of orders
+
+```
+[
+    {
+        "_id": "63f1ac6a26fee32859ec797e",
+        "userId": {
+            "_id": "63f11ab5b373b70370958065",
+            "username": "karim",
+            "email": "karim@gmail.com",
+            "password": "$2b$10$dFzAqskqhKJeRBiiR9aH..yMI0cBYRsJeRV4q3aintiaTIdILxuZq",
+            "gender": "male",
+            "userImage": "http://localhost:3000/defProfileImage.png",
+            "orders": [
+                "63f1aa72e5b78b2acc4c8be9",
+                "63f1aaabe5b78b2acc4c8bfa",
+                "63f1ac6926fee32859ec7979",
+                "63f1ac6a26fee32859ec797e"
+            ],
+            "__v": 6
+        },
+        "productId": {
+            "_id": "63eb410f87e48a6731b4cc4c",
+            "name": "Glacé",
+            "price": 150,
+            "description": "Amazing",
+            "photo": "http://localhost:3000/14Glacé.jpg",
+            "__v": 0
+        },
+        "amount": 1,
+        "totalPrice": 150,
+        "status": "pending",
+        "__v": 0
+    }
+]
+```
+
 ### GET | Get All Products
 
 ```
@@ -611,5 +685,24 @@ returns list of user orders
     "data":"http://localhost:3000/7FrenchCappuccino.jpg"
 }
 ```
+---
+### GET | get promoted products
 
+```
+/promotions
+```
+
+#### Response
+
+```
+[
+    {
+        "_id": "63e8f2031ebb0a2061cb1009",
+        "name": "Latte",
+        "price": 13.2,
+        "description": "Amazing Coffee",
+        "photo": "http://localhost:3000/3Latte.jpg"
+    }
+]
+```
 ---

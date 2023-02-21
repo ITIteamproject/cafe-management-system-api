@@ -50,4 +50,22 @@ orderRouter.delete('/', authorizeUser, async (req, res, next) => {
     }
 })
 
+orderRouter.get('/all',async (req, res, next) => {
+    try {
+        const orders = await Order.find({})
+        if (!orders) throw customError(404, 'orders not found')
+
+        let popOrders = [];
+        for (let i = 0; i < orders.length; i++) {
+            const order = await orders[i].populate('productId')
+            const user = await orders[i].populate('userId')
+            popOrders.push(order, user)
+        }
+
+        res.status(200).json(popOrders)
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = orderRouter
