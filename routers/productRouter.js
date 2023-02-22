@@ -1,22 +1,22 @@
-const express = require('express');
-const productController = require('../controllers/productController');
-const imageUpload = require('../helpers/imageHelper');
+const express = require("express");
+const productController = require("../controllers/productController");
+const imageUpload = require("../helpers/imageHelper");
 
 const router = express.Router();
 
 router
-  .route('/')
+  .route("/")
   .get(productController.getAllProducts)
-  .post(imageUpload.single('photo'), productController.createProduct);
+  .post(imageUpload.single("photo"), productController.createProduct);
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(productController.getProduct)
-  .patch(productController.updateProduct)
+  .patch(imageUpload.single("photo"), productController.updateProduct)////
   .delete(productController.deleteProduct);
 
 router
-  .route('/:id/photo')
-  .put(imageUpload.single('photo'), productController.uploadProductPhoto);
+  .route("/:id/photo")
+  .put(imageUpload.single("photo"), productController.uploadProductPhoto);
 
 module.exports = router;
