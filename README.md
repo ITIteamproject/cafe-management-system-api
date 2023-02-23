@@ -248,7 +248,7 @@
 ### GET | Get all users
 
 ```
-/profile/userImage
+/profile/all
 ```
 #### Response
 
