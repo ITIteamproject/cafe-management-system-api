@@ -36,21 +36,36 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
 // @route       Post /api/products/:id
 // @access      Private
 exports.createProduct = asyncHandler(async (req, res, next) => {
-    const product = await Product.create(req.body);
-    res.status(201).json({
-        success: true,
-        data: product,
-    });
+  const x = `${req.protocol}://${req.hostname}:3000/${
+    req.file ? req.params.id + "_" + req.file.originalname : "for testing only"
+  }`;
+  req.body.photo = x;
+  const product = await Product.create(req.body);
+
+  res.status(201).json({
+    success: true,
+    data: product,
+  });
 });
 
 // @desc        Update product
 // @route       Patch /api/products/:id
 // @access      Private
 exports.updateProduct = asyncHandler(async (req, res, next) => {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-    });
+  console.log(req.body);
+  if (req.file) {
+    const x = `${req.protocol}://${req.hostname}:3000/${
+      req.file
+        ? req.params.id + "_" + req?.file.originalname
+        : "for testing only"
+    }`;
+    req.body.photo = x;
+  }
+  console.log(req.body);
+  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
     if (!product) {
         return next(
@@ -95,9 +110,10 @@ exports.uploadProductPhoto = asyncHandler(async (req, res, next) => {
         );
     }
 
-    if (!req.file) {
-        return next(new CustomError("Please upload a file", 400));
-    }
+
+  if (!req.file) {
+    return next(new CustomError("Please upload a file", 400));
+  }
 
     const imgPath = `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.params.id}_${req.file.originalname}`;
 
