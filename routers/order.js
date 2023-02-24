@@ -74,9 +74,17 @@ orderRouter.patch("/:id", async (req, res, next) => {
     try {
         const { id } = req.params; // order id
         const { status } = req.body;
+        if (!status)
+            throw customError(401, "you didn't attached the order status");
+        if (status !== "accepted" && status !== "rejected")
+            throw customError(401, "order status incorrect");
 
-        const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
-        res.status(200).json(order)
+        const order = await Order.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+        res.status(200).json(order);
     } catch (error) {
         next(error);
     }

@@ -468,7 +468,30 @@ returns list of user orders
     "isCanceled": true
 }
 ```
+---
+### PATCH | change order status
 
+```
+/orders/:id
+```
+
+#### Request Headers
+
+- Content-Type: application/json
+
+#### Response
+returns the updated order 
+```
+{
+    "_id": "63f3188ad34d710d4d788f90",
+    "userId": "63f1019235616e754b68a208",
+    "productId": "63eb407c7f213bc350607f4d",
+    "amount": 1,
+    "totalPrice": 150,
+    "status": "rejected/accepted",
+    "__v": 0
+}
+```
 ---
 
 ### GET | get all orders
