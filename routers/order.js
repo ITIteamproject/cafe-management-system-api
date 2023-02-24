@@ -34,7 +34,7 @@ orderRouter.delete("/", authorizeUser, async (req, res, next) => {
         const user = await User.findById(id);
         if (!user) throw customError(404, "user not found");
 
-        // remove order
+        // remove order document
         const order = await Order.findByIdAndDelete(orderId);
         if (!order) throw customError(404, "order not found");
 
@@ -44,7 +44,17 @@ orderRouter.delete("/", authorizeUser, async (req, res, next) => {
         user.orders.splice(i, 1);
         user.save();
 
-        res.status(200).json({ isCanceled: true });
+        // send the updated orders to user
+        const userOrders = await Order.find({ userId: id });
+        if (!userOrders) throw customError(404, "orders not found");
+
+        let popOrders = [];
+        for (let i = 0; i < userOrders.length; i++) {
+            const order = await userOrders[i].populate("productId");
+            popOrders.push(order);
+        }
+
+        res.status(200).json(popOrders);
     } catch (error) {
         next(error);
     }

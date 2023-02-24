@@ -15,6 +15,7 @@
 * [User SignUp](#post--signup)
 * [Purchase](#post--purchase-make-an-order)
 * [Get User Orders](#get--get-all-orders)
+* [Change Order Status](#patch--change-order-status)
 * [Cancel User Order](#delete--cancel-user-order)
 * [Get All Orders](#get--get-all-orders)
 * [Get All Products](#get--get-all-products)
@@ -461,12 +462,24 @@ returns list of user orders
 
 #### Response
 
-returns list of user orders
+returns updated user orders
 
 ```
-{
-    "isCanceled": true
-}
+[
+    {
+        "_id": "63e963956b87884e29323048",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": {
+            "_id": "63e961c66b87884e29323042",
+            "name": "coffee",
+            "price": 10,
+            "description": "amazing drink",
+            "__v": 0
+        },
+        "status": "pending",
+        "__v": 0
+    }
+]
 ```
 ---
 ### PATCH | change order status
@@ -478,6 +491,13 @@ returns list of user orders
 #### Request Headers
 
 - Content-Type: application/json
+
+#### Request Body
+```
+{
+    "status": "accepted or rejected"
+}
+```
 
 #### Response
 returns the updated order 
