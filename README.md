@@ -467,11 +467,59 @@ returns list of user orders
 
 #### Response
 
-returns list of user orders
+returns updated user orders
+
+```
+[
+    {
+        "_id": "63e963956b87884e29323048",
+        "userId": "63e4827cb01cc4b8fac999de",
+        "productId": {
+            "_id": "63e961c66b87884e29323042",
+            "name": "coffee",
+            "price": 10,
+            "description": "amazing drink",
+            "__v": 0
+        },
+        "status": "pending",
+        "__v": 0
+    }
+]
+```
+
+---
+
+### PATCH | change order status
+
+```
+/orders/:id
+```
+
+#### Request Headers
+
+- Content-Type: application/json
+
+#### Request Body
 
 ```
 {
-    "isCanceled": true
+    "status": "accepted or rejected"
+}
+```
+
+#### Response
+
+returns the updated order
+
+```
+{
+    "_id": "63f3188ad34d710d4d788f90",
+    "userId": "63f1019235616e754b68a208",
+    "productId": "63eb407c7f213bc350607f4d",
+    "amount": 1,
+    "totalPrice": 150,
+    "status": "rejected/accepted",
+    "__v": 0
 }
 ```
 
