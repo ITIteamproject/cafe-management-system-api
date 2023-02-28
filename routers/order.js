@@ -69,8 +69,9 @@ orderRouter.get("/all", async (req, res, next) => {
         let popOrders = [];
         for (let i = 0; i < orders.length; i++) {
             const order = await orders[i].populate("productId");
-            const user = await orders[i].populate("userId");
-            popOrders.push(order, user);
+            // const user = await orders[i].populate("userId");
+            // popOrders.push(order, user);
+            popOrders.push(order);
         }
 
         res.status(200).json(popOrders);
