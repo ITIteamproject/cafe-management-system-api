@@ -31,7 +31,7 @@ userRouter.post('/signup', async (req, res, next) => {
                         email,
                         password: hashedPassword,
                         gender,
-                        userImage: `${req.protocol}://${req.hostname}:${process.env.PORT}/defProfileImage.png`
+                        userImage: `${req.protocol}://${req.hostname}/defImage.jpg`
                     });
                     const token = await signUserToken(user._id)
                     res.status(200).send({accessToken: token});
