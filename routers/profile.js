@@ -129,7 +129,7 @@ userProfileRouter.get("/userImage", authorizeUser, async (req, res, next) => {
         const userImage = await User.findById(id, "userImage -_id"); // return only userImage and exclude _id
         if (!userImage) throw customError(401, "unauthorized");
 
-        res.status(200).send(userImage);
+        res.status(200).json(userImage);
     } catch (error) {
         next(error);
     }
