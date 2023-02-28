@@ -36,9 +36,7 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
 // @route       Post /api/products/:id
 // @access      Private
 exports.createProduct = asyncHandler(async (req, res, next) => {
-  const x = `${req.protocol}://${req.hostname}:3000/${
-    req.file ? req.params.id + "_" + req.file.originalname : "for testing only"
-  }`;
+  const x = `${req.protocol}://${req.hostname}/${req.params.id + "_" + req.file.originalname}`;
   req.body.photo = x;
   const product = await Product.create(req.body);
 
