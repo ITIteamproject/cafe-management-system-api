@@ -12,14 +12,18 @@ const userRouter = express.Router()
 
 // Sign Up
 userRouter.post('/signup', async (req, res, next) => {
+    let ismatched = true;
+    let isexist = false;
     const { username, email, password, repassword, gender } = req.body;
     console.log(req.body)
     const emailExits = await User.findOne({ email });
     if (emailExits) {
-        res.status(404).send('username alredy exist');
+        isexist = true;
+        res.status(404).send(isexist);
     } else {
         if (password != repassword) {
-            res.status(404).send('password not match!');
+            ismatched = false;
+            res.status(404).send(ismatched);
         } else {
             if (gender != 'female' && gender != 'male') {
                 res.status(404).send('please enter f or m for gender');
