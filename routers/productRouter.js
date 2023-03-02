@@ -12,7 +12,7 @@ router
 router
   .route("/:id")
   .get(productController.getProduct)
-  .patch(imageUpload.single("photo"), productController.updateProduct)////
+  .patch(imageUpload.single("photo"), productController.updateProduct)
   .delete(productController.deleteProduct);
 
 router
