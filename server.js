@@ -14,9 +14,9 @@ const ProfileRouter = require('./routers/profile');
 const productRouter = require('./routers/productRouter');
 const purchaseRouter = require('./routers/purchase');
 const orderRouter = require('./routers/order');
-const promotionRouter = require('./routers/promotion')
+const promotionRouter = require('./routers/promotion');
 
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 app.use(express.static('uploads'));
 

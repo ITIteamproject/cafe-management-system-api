@@ -1,31 +1,31 @@
 # Documentation
 
 ## All Requests
-* [GET User Profile Info](#get--get-user-profile-info)
-* [Edit User Profile Info](#patch--edit-user-profile-info)
-* [Edit Username](#patch--edit-username)
-* [Edit Email](#patch--edit-email)
-* [Edit Gender](#patch--edit-gender)
-* [Change Password](#patch--change-password)
-* [Get User Profile Image](#get--get-user-profile-image)
-* [Edit User Profile Image](#patch--edit-user-profile-image)
-* [Get All Users](#get--get-all-users)
-* [User Login](#post--user-login)
-* [Admin Login](#post--admin-login)
-* [User SignUp](#post--signup)
-* [Purchase](#post--purchase-make-an-order)
-* [Get User Orders](#get--get-all-orders)
-* [Change Order Status](#patch--change-order-status)
-* [Cancel User Order](#delete--cancel-user-order)
-* [Get All Orders](#get--get-all-orders)
-* [Get All Products](#get--get-all-products)
-* [Get Product By ID Using Search Query](#get--get-product-by-id--name--price----using-search-query)
-* [Get Product By ID Using Query Params](#get--get-product-by-id----using-query-params)
-* [Create New Product](#post--create-new-product)
-* [Update Product](#patch--update-product)
-* [Delete Product](#delete--delete-product)
-* [Upload Image](#put--upload-image)
-* [Get Promoted Products](#get--get-promoted-products)
+
+- [GET User Profile Info](#get--get-user-profile-info)
+- [Edit User Profile Info](#patch--edit-user-profile-info)
+- [Edit Username](#patch--edit-username)
+- [Edit Email](#patch--edit-email)
+- [Edit Gender](#patch--edit-gender)
+- [Change Password](#patch--change-password)
+- [Get User Profile Image](#get--get-user-profile-image)
+- [Edit User Profile Image](#patch--edit-user-profile-image)
+- [Get All Users](#get--get-all-users)
+- [User Login](#post--user-login)
+- [Admin Login](#post--admin-login)
+- [User SignUp](#post--signup)
+- [Purchase](#post--purchase-make-an-order)
+- [Get User Orders](#get--get-all-orders)
+- [Cancel User Order](#delete--cancel-user-order)
+- [Get All Orders](#get--get-all-orders)
+- [Get All Products](#get--get-all-products)
+- [Get Product By ID Using Search Query](#get--get-product-by-id--name--price----using-search-query)
+- [Get Product By ID Using Query Params](#get--get-product-by-id----using-query-params)
+- [Create New Product](#post--create-new-product)
+- [Update Product](#patch--update-product)
+- [Delete Product](#delete--delete-product)
+- [Upload Image](#put--upload-image)
+- [Get Promoted Products](#get--get-promoted-products)
 
 ## Requests
 
@@ -80,6 +80,7 @@
     "gender": "male"
 }
 ```
+
 ---
 
 ### PATCH | Edit Username
@@ -245,12 +246,15 @@
     "userImage": "updated url image"
 }
 ```
+
 ---
+
 ### GET | Get all users
 
 ```
 /profile/all
 ```
+
 #### Response
 
 ```
@@ -277,6 +281,7 @@
     }
 ]
 ```
+
 ---
 
 ### POST | User Login
@@ -481,7 +486,9 @@ returns updated user orders
     }
 ]
 ```
+
 ---
+
 ### PATCH | change order status
 
 ```
@@ -493,6 +500,7 @@ returns updated user orders
 - Content-Type: application/json
 
 #### Request Body
+
 ```
 {
     "status": "accepted or rejected"
@@ -500,7 +508,9 @@ returns updated user orders
 ```
 
 #### Response
-returns the updated order 
+
+returns the updated order
+
 ```
 {
     "_id": "63f3188ad34d710d4d788f90",
@@ -512,6 +522,7 @@ returns the updated order
     "__v": 0
 }
 ```
+
 ---
 
 ### GET | get all orders
@@ -519,7 +530,9 @@ returns the updated order
 ```
 /orders/all
 ```
+
 #### Response
+
 returns array of orders
 
 ```
@@ -569,6 +582,7 @@ returns array of orders
 {
     "success": true,
     "count": 2,
+    "views": 5
     "data": [
         {
             "_id": "63e8f2031ebb0a2061cb1009",
@@ -731,7 +745,9 @@ returns array of orders
     "data":"http://localhost:3000/7FrenchCappuccino.jpg"
 }
 ```
+
 ---
+
 ### GET | get promoted products
 
 ```
@@ -751,4 +767,5 @@ returns array of orders
     }
 ]
 ```
+
 ---
